@@ -14,14 +14,8 @@
 
 ## Lessons Learned
 
-- Use repo-local virtualenvs for all installs and checks (`make init_dev`, `source ./venv-dev/bin/activate`, `make install_dev`).
-- Internal shared packages should be typed:
-  - include `py.typed` in package sources
-  - include `py.typed` in package data at build time
-- Prefer fixing package typing at source over adding broad `ignore_missing_imports` in consumers.
-- PyPI Trusted Publishing requires exact claim matches (owner/repo/workflow/branch); no API token password when using OIDC.
-- Use `skip-existing: true` in publish workflow to avoid duplicate-version failures.
-- Trigger publish workflow from successful `Python Application` runs on `main` pushes.
-- Add `make release` to package repos to bump patch version, commit, and push from clean `main`.
-- Be careful with automated Makefile replacements; validate with `make -n lint_full`.
-- Keep formatter commands batched by default; avoid per-file loops unless strictly necessary.
+- Always run tooling in repo venv (`make init_dev`, `source ./venv-dev/bin/activate`, `make install_dev`).
+- Shared internal packages should publish typing metadata (`py.typed` + package-data).
+- For Trusted Publishing, repo/workflow/branch must exactly match PyPI publisher settings.
+- Bump versions before publish (`make release`); existing versions cannot be re-uploaded to PyPI.
+- After Makefile edits, validate quickly with `make -n lint_full`.
